@@ -1,0 +1,75 @@
+{
+  "name": "weapp-native",
+  "version": "0.0.1",
+  "description": "像React一样开发微信小程序",
+  "main": "index.js",
+  "bin": {
+    "wn": "./dist/wn-cli"
+  },
+  "repository": "skyFi/weapp-native",
+  "bugs": {
+    "url": "https://github.com/skyFi/weapp-native/issues"
+  },
+  "homepage": "https://github.com/skyFi/weapp-native",
+  "scripts": {
+    "prepublish": "yarn build",
+    "build": "yarn build.bin && yarn build.lib",
+    "build.bin": "rollup -c rollup/cli.js --environment BUILD:production && chmod a+x dist/wn-cli",
+    "build.lib": "rollup -c rollup/lib.js --environment BUILD:production",
+    "test": "jest"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "util"
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
+  "author": { "name": "skylor" },
+  "license": "MIT",
+  "keywords": [
+    "weapp-native",
+    "jsx",
+    "小程序",
+    "微信",
+    "weapp",
+    "wxapp",
+    "wechat",
+    "weixin",
+    "miniprogram",
+    "react"
+  ],
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/generator": "^7.0.0-beta.36",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.36",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.36",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.36",
+    "@babel/preset-react": "^7.0.0-beta.36",
+    "@babel/traverse": "^7.0.0-beta.36",
+    "@babel/types": "^7.0.0-beta.36",
+    "babylon": "^7.0.0-beta.36",
+    "chalk": "^2.3.0",
+    "chokidar": "^2.0.0",
+    "lodash": "^4.17.4",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "prettify-xml": "^1.2.0",
+    "rollup": "^0.53.2",
+    "rollup-plugin-babel": "^4.0.0-beta.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.36",
+    "codecov": "^3.0.0",
+    "eslint": "^4.14.0",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^21.2.1",
+    "redux": "^3.7.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-string": "^2.0.2",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.2"
+  }
+}

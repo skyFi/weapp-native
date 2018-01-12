@@ -1,0 +1,29 @@
+*node_modules*
+.vscode
+.travis.yml
+.yml
+.babelrc
+src
+vender
+*.config.js
+package*
+
+
+# testing
+coverage
+test
+
+# production
+build
+*.tgz
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
