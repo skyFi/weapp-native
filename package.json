@@ -1,6 +1,6 @@
 {
   "name": "wn-cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "weapp-native cli 像React一样开发微信小程序",
   "main": "index.js",
   "bin": {
