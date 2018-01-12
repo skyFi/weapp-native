@@ -137,7 +137,12 @@ function writeOutput(output, paths) {
   const { id, type, js, } = output
   const { target, src } = paths
   const { name, dir } = path.parse(path.join(target, path.relative(src, id)))
-  const dirname = /page|component/.test(type) ? path.resolve(dir, name) : dir
+  let dirname = dir
+  
+  // todo: 目录结构确定
+  // if (/component/.test(type)) {
+  //   dirname = path.resolve(dir, name)
+  // }
 
   if (type) {
     info(type, path.relative(src, id))

@@ -1,6 +1,6 @@
 import { App } from 'wn';
-import './pages/index.jsx';
-import './pages/me.jsx';
+import './pages/index/index.jsx';
+import './pages/me/me.jsx';
 
 export default class extends App {
   debug = true

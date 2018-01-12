@@ -9,11 +9,12 @@ const processFn = (fn, opts) =>
     }
 
     return new P((resolve, reject) => {
-      if (opts.objectParams && typeof args[0] === 'object') {
-        const objectParams = args[0]
-        objectParams.success = function(result) { resolve(result)}
-        objectParams.fail = function(result) { reject(result)}
-        objectParams.complete = null
+      if (opts.objectParams && (!args[0] || typeof args[0] === 'object')) {
+        args[0] = args[0] || {}
+        args[0].success = function(result) { resolve(result)}
+        args[0].fail = function(result) { reject(result)}
+        // todo: complete 的处理
+        args[0].complete = null
       } else if (opts.errorFirst) {
         args.push(function(err, result) {
           if (opts.multiArgs) {

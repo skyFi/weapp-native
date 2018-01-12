@@ -192,6 +192,23 @@ const transform = ({
           .replace(/([A-Za-z0-9_$]*):/g, '"$1":')
 
         JSONAttrs[path.node.key.name] = JSON.parse(v)
+      }  else if ( isPage() && /window|navigationBarBackgroundColor|navigationBarTextStyle|navigationBarTitleText|backgroundColor|backgroundTextStyle|enablePullDownRefresh|disableScroll|onReachBottomDistance/.test(path.node.key.name)) {
+        const v = generate(path.node.value, {
+          concise: true,
+          comments: false,
+          jsonCompatibleStrings: true,
+        })
+          .code.replace(/'/g, '"')
+          .replace(/([A-Za-z0-9_$]*):/g, '"$1":')
+
+        const vObj = JSON.parse(v)
+        if (path.node.key.name === 'window') {
+          Object.keys(vObj).forEach((key) => {
+            JSONAttrs[key] = vObj[key]
+          })
+        } else {
+          JSONAttrs[path.node.key.name] = vObj
+        }
       } else if ( isGame() && /deviceOrientation|showStatusBar|networkTimeout|workers/.test(path.node.key.name)) {
         const v = generate(path.node.value, {
           concise: true,
@@ -262,7 +279,7 @@ const transform = ({
         ? path.node.specifiers[0].local.name
         : '' //?
       let typedModule
-
+      
       if (id) {
         const { dir } = _path.parse(id)
         const dependedModuleId = _path.resolve(dir, source)
@@ -274,17 +291,15 @@ const transform = ({
         switch (typedModule.type) {
           case 'page': {
             const { dir, name } = _path.parse(source)
-            ImportPages.push(
-              _path.join(dir.replace(`.${_path.sep}`, ''), name, name)
-            )
+            const pagePath = _path.join(dir.replace(`.${_path.sep}`, ''), name)
+            ImportPages.push(pagePath)
             path.remove()
             break
           }
           case 'component': {
             const { dir, name } = _path.parse(source)
             const componentPath = _path.format({ dir, name })
-            // const componentPath = _path.join('..', _path.format({ dir, name }))
-            const modulePath = _path.join('..', componentPath, name)
+            const modulePath = _path.join('..', componentPath)
             ImportComponents[moduleName] = modulePath
             ComponentRelations[_path.join('..', componentPath)] = { type: 'child' }
             path.remove()
@@ -402,7 +417,6 @@ const transform = ({
               t.objectExpression(objProps)
             )
           )
-          // console.log(999, Attrs.length)
         }
         const componentProperties = []
         Object.keys(Properties).forEach(key => {
@@ -458,30 +472,30 @@ const transform = ({
   }
 
   // .json
-  const _json = isApp() || isGame()
+  const _json = isApp() || isGame() // 小程序配置
     ? ImportPages.length
       ? Object.assign({ pages: ImportPages }, JSONAttrs)
       : Object.keys(JSONAttrs).length ? JSONAttrs : undefined
-    : isComponent()
+    : isComponent() // 组件配置
       ? {
         component: true,
         usingComponents: Object.keys(ImportComponents).length
           ? ImportComponents
           : undefined,
       }
-      : isPage() && Object.keys(ImportComponents).length
-        ? {
+      : isPage() // 页面配置
+        ? Object.assign(Object.keys(ImportComponents).length ? {
           usingComponents: ImportComponents,
-        }
+        } : {}, JSONAttrs || {})
         : undefined
   output.json = _json && JSON.stringify(_json)
 
   // .js
-  ImportSources.forEach(function(source) {
-    if (isComponent() || isPage()) {
-      source.value = _path.join('..', source.value)
-    }
-  })
+  // ImportSources.forEach(function(source) {
+  //   if (isComponent() || isPage()) {
+  //     source.value = _path.join('..', source.value)
+  //   }
+  // })
   output.js = isTemplate()
     ? null
     : transformFrom(generate(AST).code, {
@@ -497,7 +511,6 @@ const transform = ({
         ],
       ],
     }).code.replace('"use strict";\n\n', '')
-  // console.log('GENERATED', output.type)
 
   return output
 }

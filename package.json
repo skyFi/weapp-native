@@ -16,7 +16,8 @@
     "build": "yarn build.bin && yarn build.lib",
     "build.bin": "rollup -c rollup/cli.js --environment BUILD:production && chmod a+x dist/wn-cli",
     "build.lib": "rollup -c rollup/lib.js --environment BUILD:production",
-    "test": "jest"
+    "test": "jest",
+    "example": "npm run build && cp ./dist/wn.js ./dist/modules/wn.js && node ./dist/wn-cli ./examples/"
   },
   "jest": {
     "testPathIgnorePatterns": [
