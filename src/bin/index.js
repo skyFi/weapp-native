@@ -143,7 +143,10 @@ function writeOutput(output, paths) {
     info(type, path.relative(src, id))
     if (!fs.existsSync(dirname)) mkdirp.sync(dirname)
     Object.entries(output).forEach(function([fileSuffix, data]) {
-      if (data && /json|js|wxml|wxss/.test(fileSuffix)) {
+      if (data && /json|js|wxml|wxss|css/.test(fileSuffix)) {
+        if (fileSuffix === 'css') {
+          fileSuffix = 'wxss'
+        }
         const filePath = path.join(dirname, `${name}.${fileSuffix}`)
         fs.writeFileSync(filePath, data)
       }
