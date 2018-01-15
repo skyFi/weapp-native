@@ -6,6 +6,7 @@ const { transformSync: transformFrom } = require('@babel/core')
 const prettifyXml = require('prettify-xml')
 const { zip } = require('lodash')
 const _path = require('path')
+const fs = require('fs')
 
 const propTypes = {
   string: 'String',
@@ -460,10 +461,20 @@ const transform = ({
     },
   }
 
+  const css = (id) => {
+    const { dir, name } = _path.parse(id)
+    const cssPathname = _path.resolve(dir, `${name}.css`)
+    if (fs.existsSync(cssPathname)) {
+      const css = fs.readFileSync(cssPathname, 'utf-8')
+      output.css = css
+    }
+  }
+
+  css(id)
+
   const AST = parse(code)
-  // traverse(ast, Object.assign({}, visitor, visitJSX, visitCSS))
-  traverse(AST, Object.assign({}, visitor, visitJSX, visitCSS))
-  // console.log('PARSED', id)
+  // traverse(AST, Object.assign({}, visitor, visitJSX, visitCSS))
+  traverse(AST, Object.assign({}, visitor, visitJSX))
 
   // reference templates
   if (Object.keys(ImportTemplates).length) {

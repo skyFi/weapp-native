@@ -233,13 +233,13 @@ async function build(sourcePath, targetPath) {
 
   if (command.watch) {
     try {
-      const watcher = chokidar.watch(Object.keys(modules))
+      const watcher = chokidar.watch(genWatchList(modules))
 
       watcher.on('change', async function(path) {
         modules = await build(sourcePath, targetPath)
         const now = new Date
-        prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 更新`)
-        watcher.add(Object.keys(modules))
+        prompt(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] 更新: ${path}`)
+        watcher.add(genWatchList(modules))
       })
 
       watcher.on('error', function(err) {
@@ -250,4 +250,16 @@ async function build(sourcePath, targetPath) {
     }
   }
 
+  function genWatchList(modules) {
+    const moduleKeys = Object.keys(modules)
+    const list = moduleKeys
+    moduleKeys.forEach(m => {
+      const { dir, name } = path.parse(m)
+      const cssPathname = path.resolve(dir, `${name}.css`)
+      if (fs.existsSync(cssPathname)) {
+        list.push(cssPathname)
+      }
+    })
+    return list
+  }
 })()
