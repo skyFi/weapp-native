@@ -118,9 +118,7 @@ const transform = ({
 
     JSXAttribute(path) {
       const { name, value } = path.node
-      path.node.name.name = /if|elif|else|for|key|for-index|for-item/.test(
-        name.name
-      )
+      path.node.name.name = /if|elif|else|for|key|for-index|for-item/.test(name.name)
         ? `wx:${name.name}`
         : /^on(\w*)$/.test(name.name)
           ? name.name.replace(/^on(\w*)$/, 'bind$1').toLowerCase()
@@ -142,7 +140,7 @@ const transform = ({
         const newValue = generate(value.expression, { concise: true }).code
         path.node.value = t.stringLiteral(`{${newValue}}`)
       } else if (/^bind/.test(path.node.name.name)) {
-        const newValue = generate(value.expression).code
+        const newValue =   generate(value.expression).code
         path.node.value = t.stringLiteral(newValue.replace('this.', ''))
       } else {
         const newValue = generate(value.expression).code
@@ -229,7 +227,11 @@ const transform = ({
     ClassMethod: {
       enter(path) {
         const methodName = path.node.key.name
+
         if (methodName === 'render') {
+          if (path.node.body.body.length > 1) {
+            console.error('render 方法只能 return !')
+          }
           return
         } else if (/created|attached|ready|moved|detached/.test(methodName)) {
           // Component life cycle fn.
