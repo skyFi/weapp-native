@@ -1,20 +1,22 @@
-# weapp-native **(WN)**
+# **(WN-cli)**
 
-weapp-native (wn) 像React组件开发一样来开发微信小程序
+WN-cli 像React组件开发一样来开发微信小程序
+
+名字由来：wn -> weapp native 取第一个字母
 
 # Install
 
 ```
-npm install weapp-native --save-dev
+npm install wn-cli --save-dev
 // 或者
-yarn add weapp-native --dev
+yarn add wn-cli --dev
 ```
 
 # Usage
 
 ```
-npx wx ./examples ./dist
+npx wn ./examples ./dist
 
 // 监听模式
-npx wx ./examples ./dist -w
+npx wn ./examples ./dist -w
 ```
