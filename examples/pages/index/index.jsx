@@ -8,8 +8,8 @@ export default class extends Page {
   navigationBarTextStyle = 'black'
 
   async onShow() {
-    const userInfo = await wx.getSystemInfo()
-    console.log(userInfo);
+    const systemInfo = await wx.getSystemInfo()
+    console.log(systemInfo);
   }
 
   data = {

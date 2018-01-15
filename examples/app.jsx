@@ -6,7 +6,7 @@ export default class extends App {
   debug = true
 
   window = {
-    navigationBarTitleText: '问塔',
+    navigationBarTitleText: 'hello',
     navigationBarTextStyle: 'black',
     navigationBarBackgroundColor: '#f4f5f6',
     backgroundColor: '#f4f5f6',
@@ -32,8 +32,8 @@ export default class extends App {
   hello() { return '自定义公共函数' }
 
   // 生命周期�函数
-  onLaunch() { console.log('app: hello world') }
-  onShow() { console.log('app: yes, I am') }
-  onHide() { console.log('app: just minutes') }
-  onError() { console.log('app: woops') }
+  onLaunch() { console.log('app: hello onLaunch') }
+  onShow() { console.log('app: hello onShow') }
+  onHide() { console.log('app: hello onHide') }
+  onError() { console.log('app: hello onError') }
 }
