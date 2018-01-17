@@ -15,18 +15,18 @@ export default class extends Page {
   data = {
     a: 1
   }
-
+  
   ontap(e) {
     console.log('点击了我', e);
-    this.setState({ a: 2 })
+    this.setState({ a: 2 });
   }
 
   render() {
     return (
       <view class="test">
         <header ontap={this.ontap}>
-          <header>
-          </header>
+          out
+          <header />
         </header>
         你好，小程序      
       </view>

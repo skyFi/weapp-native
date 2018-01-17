@@ -60,6 +60,16 @@ npx wn ./examples ./dist -w
 ```
 然后在微信开发者工具中打开 `dist/` 文件夹，就可以预览开发了，可以选择你喜欢的编辑器。
 
+# 将来集成的功能
+
+* this 代理 wx, getApp等
+* 优化原生请求 request，避免请求限制
+* 接入 redux
+* 接入 saga
+* 增加 gulp 管理工作流
+* 增加 less 预编译
+* 扩展 `{ }` 操作符
+
 # API
 
 ## 注册小程序

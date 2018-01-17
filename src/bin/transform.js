@@ -266,7 +266,6 @@ const transform = ({
           )
           if (!result) return
           if (result.argument.type === 'JSXElement') {
-            //
             output.wxml = prettifyXml(
               generate(result.argument, { concise: true }).code,
               { indent: 2 }
