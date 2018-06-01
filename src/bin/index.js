@@ -54,10 +54,13 @@ function copyNodeModule(source, target) {
     if (!fs.existsSync(nodeModuleSource)) nodeModuleSource = path.resolve('node_modules', name, `${name}.js`)
     if (!fs.existsSync(nodeModuleSource)) return error(`无法加载 ${name}`)
   }
-
   if (!fs.existsSync(modulesPath)) mkdirp.sync(modulesPath)
   if (!fs.existsSync(filePath)) {
     fs.copyFileSync(nodeModuleSource, filePath)
+
+    if (type === 'local_module') {
+      console.log(nodeModuleSource)
+    }
     info(type, path.relative('', nodeModuleSource))
   }
 }
@@ -152,8 +155,10 @@ function writeOutput(output, paths) {
         if (fileSuffix === 'css') {
           fileSuffix = 'wxss'
         }
-        const filePath = path.join(dirname, `${name}.${fileSuffix}`)
-        fs.writeFileSync(filePath, data)
+        if (name.trim() === 'rollupPluginBabelHelpers') {
+          const filePath = path.join(dirname, `${name}.${fileSuffix}`)
+          fs.writeFileSync(filePath, data)
+        }
       }
     })
   } else {

@@ -1,6 +1,6 @@
 {
   "name": "wn-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "weapp-native cli 像React一样开发微信小程序",
   "main": "index.js",
   "bin": {
@@ -60,7 +60,8 @@
     "mkdirp": "^0.5.1",
     "prettify-xml": "^1.2.0",
     "rollup": "^0.53.2",
-    "rollup-plugin-babel": "^4.0.0-beta.0"
+    "rollup-plugin-babel": "^4.0.0-beta.0",
+    "wn-cli": "^1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.36",
