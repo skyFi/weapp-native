@@ -1,5 +1,7 @@
 # **wn-cli**
 
+> 暂不维护，推荐一个 https://github.com/NervJS/taro
+
 wn-cli 像React组件开发一样来开发微信小程序
 
 名字由来：**wn -> weapp native** 取第一个字母
